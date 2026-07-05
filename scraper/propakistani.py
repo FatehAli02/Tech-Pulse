@@ -35,7 +35,7 @@ def scrape_propakistani():
                 timestamp = article.find('div', class_="entry-meta").find('span', class_="posted-on").a.get_text(strip=True)
                 timestamp = timestamp.lower().strip()
 
-                if "hour" in timestamp or "hours" in timestamp or "minutes" in timestamp or "min" in timestamp:
+                if "hour" in timestamp or "hours" in timestamp or "minutes" in timestamp or "min" in timestamp or "seconds" in timestamp:
                     news_header = article.find('header').h2.a.get_text(strip=True)
                     news_link = article.find('div', class_="entry-content").p.a.get('href')
 
@@ -51,11 +51,16 @@ def scrape_propakistani():
                             for junk in content_div.select("section.wpfsc-stay-connected"):
                                 junk.decompose()
                             
+                            paragraphs = []
                             for para in content_div.find_all('p'):
-                                raw_content = " ".join(para.get_text(strip=True))
+                                text = para.get_text(strip=True)
+                                if text:
+                                    text = re.sub(r'\s+', ' ', text).strip()
+                                    paragraphs.append(text)
+                            news_content = "\n\n".join(paragraphs)
                                 
-                            news_content = re.sub(r'(?<=\S) (?=\S)', '', raw_content)
-                            news_content = re.sub(r'\s+', ' ', news_content).strip()  
+                            # news_content = re.sub(r'(?<=\S) (?=\S)', '', raw_content)
+                            # news_content = re.sub(r'\s+', ' ', news_content).strip()  
                         else:
                             news_content = "Content Not Found"
 

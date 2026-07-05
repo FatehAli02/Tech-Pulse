@@ -17,5 +17,9 @@ def csv_history(articles, filename="data/history.csv"):
             writer.writeheader()
         
         for article in articles:
-            article['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            writer.writerow(article)
+            csv_row = article.copy()
+
+            if len(csv_row['body']) > 150:
+                csv_row["body"] = csv_row["body"][:150] + "..."
+            csv_row['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            writer.writerow(csv_row)

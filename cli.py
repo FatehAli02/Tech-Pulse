@@ -2,6 +2,7 @@ import typer
 from loguru import logger
 import sys
 from pathlib import Path
+from core.pipeline import run_pipeline
 
 app = typer.Typer(help="Tech Pulse - Smart News Digest CLI")
 
@@ -41,7 +42,7 @@ def run(
     else:
         logger.info("Email digest is enabled. (Will be sent at the end of the pipeline)")
 
-    logger.debug("Phase 1 Complete, Skeleton is ready")
+    run_pipeline(send_email= not no_email)
     logger.success("Tech Pulse Finised Successfully")
 
 if __name__ == "__main__":
