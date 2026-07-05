@@ -59,8 +59,6 @@ def scrape_propakistani():
                                     paragraphs.append(text)
                             news_content = "\n\n".join(paragraphs)
                                 
-                            # news_content = re.sub(r'(?<=\S) (?=\S)', '', raw_content)
-                            # news_content = re.sub(r'\s+', ' ', news_content).strip()  
                         else:
                             news_content = "Content Not Found"
 

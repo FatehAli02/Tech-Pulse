@@ -11,31 +11,25 @@ def setup_logging():
     log_dir = Path("logs")
     log_dir.mkdir(exist_ok=True)
 
-    # Removing Default console logger, to make customized
     logger.remove()
 
-    # Adding a console logger
     logger.add(
         sys.stderr,
         format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <level>{message}</level>",
         level="INFO"
     )
 
-    # Adding File Logger
     logger.add(
         log_dir / "app.log",
         format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}",
         rotation="1 MB"
     )
 
-    # CLI Commands
 @app.command()
 def run(
     no_email: bool = typer.Option(False, help="Run the pipeline without sending the email digest.")
 ):
     logger.info("Starting the Tech Pulse Pipeline...")
-
-    # This is where we will eventually call Phase 2 (Scraping), Phase 3, etc.
 
     if no_email:
         logger.warning("Email digest is disabled via the --no-email flag.")
